@@ -7,7 +7,7 @@ import flet.canvas as cv
 
 from digit_circle import digitCircle
 from tick_circle import tickCircle
-from watch_face import watchFace
+from watch_face import watch_face
 
 def main(page: ft.Page) -> None:
     parser = argparse.ArgumentParser(description='Modify data in repository',
@@ -40,8 +40,8 @@ def main(page: ft.Page) -> None:
         color = ft.colors.BLACK54,
         weight=ft.FontWeight.BOLD
     )
-    cp = watchFace(radius=radius)
-    cp.shapes.extend(digitCircle(radius=radius, digitStyle=digitStyle, digitSize=digitSize))
+    cp = watch_face(radius=radius)
+    # cp.shapes.extend(digitCircle(radius=radius, digitStyle=digitStyle, digitSize=digitSize))
     cp.shapes.extend(tickCircle(radius=radius))
     page.window.width = 2.2 * radius
     page.window.height = 2.3 * radius

@@ -1,7 +1,7 @@
 import flet as ft
 import flet.canvas as cv
 
-def watchFace(radius: float):
+def watch_face(radius: float):
     stroke_paint = ft.Paint(color=ft.colors.BLACK26, stroke_width=5, style=ft.PaintingStyle.STROKE)
     fill_paint = ft.Paint(color=ft.colors.BLACK12, style=ft.PaintingStyle.FILL)
     return cv.Canvas(
