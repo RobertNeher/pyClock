@@ -1,13 +1,20 @@
 import flet as ft
-import math
 import flet.canvas as cv
+import math
 
-def digitCircle(radius: float, digitStyle: ft.TextStyle, digitSize: float):
+def digitCircle(radius: float):
     startAngle = math.pi
     digitAngle = 0
     delta = (2.0 * math.pi)/12.0
     digit = 12
     digitShapes = []
+    digitSize = radius / 5.0
+
+    digitStyle = ft.TextStyle(
+        size = digitSize,
+        color = ft.colors.BLACK54,
+        weight=ft.FontWeight.BOLD
+    )
 
     while digitAngle <= startAngle + (2.0 * math.pi):
         x = radius * (1.0 + math.sin(startAngle + digitAngle))
