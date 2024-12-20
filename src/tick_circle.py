@@ -2,27 +2,49 @@ import flet as ft
 import flet.canvas as cv
 import math
 
-def tickCircle(radius: float): #, digitStyle: ft.TextStyle, digitSize: float):
-    # startAngle = math.pi
+from random_color import random_Color
+
+def tickCircle(radius: float, randomColor: bool = False): #, digitStyle: ft.TextStyle, digitSize: float):
+    startAngle = math.pi / 2
     digitAngle = 0
-    delta = (2.0 * math.pi)/12.0
-    tickSize = radius * 0.1
+    delta = (2.0 * math.pi)/60.0
+    tickSizeHour = radius * 0.1
+    tickSizeMinute = radius * 0.05
     digitShapes = []
-    stroke_paint = ft.Paint(color=ft.colors.BLACK26, stroke_width=5, style=ft.PaintingStyle.STROKE)
+    strokePaint = ft.Paint(color=ft.colors.BLACK26, stroke_width=5, style=ft.PaintingStyle.STROKE)
 
-    while digitAngle <= (2.0 * math.pi):
-        digitShapes.append(cv.Line(
-            # x1 = radius,
-            # y1 = tickSize,
-            # x2 = radius,
-            # y2 = 0,
-            x1 = radius * (1.0 + math.sin(digitAngle)),
-            y1 = tickSize * (1.0 + math.sin(digitAngle)),
-            x2 = radius * (1.0 + math.sin(digitAngle)),
-            y2 = radius * (1.0 + math.sin(digitAngle)),
-            paint=stroke_paint
-        ))
+    for i in range(1, 60):
+        radiant = float(i) * (2 * math.pi / 60.0)
 
-        digitAngle += delta
+        x1 = radius * math.sin(radiant)
+        y1 = radius * math.cos(radiant)
+
+        if i % 5 == 0: # hour tick
+            x2 = x1 - tickSizeHour * math.sin(radiant)
+            y2 = y1 - tickSizeHour * math.cos(radiant)
+            strokePaint = ft.Paint(
+                color=random_Color() if randomColor else ft.colors.BLACK26,
+                stroke_width=8,
+                style=ft.PaintingStyle.STROKE
+            )
+        else: # minute tick
+            x2 = x1 - tickSizeMinute * math.sin(radiant)
+            y2 = y1 - tickSizeMinute * math.cos(radiant)
+             
+            strokePaint = ft.Paint(
+                color=random_Color() if randomColor else ft.colors.BLACK26,
+                stroke_width=5,
+                style=ft.PaintingStyle.STROKE
+            )
+
+        digitShapes.append(
+            cv.Line(
+                x1 = radius + x1,
+                y1 = radius + y1,
+                x2 = radius + x2,
+                y2 = radius + y2,
+                paint=strokePaint
+            )
+        )
 
     return digitShapes

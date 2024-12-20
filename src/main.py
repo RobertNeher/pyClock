@@ -14,7 +14,7 @@ def main(page: ft.Page) -> None:
     parser = argparse.ArgumentParser(description='Modify data in repository',
                                     usage=f"{sys.argv[0]} [options]", allow_abbrev=False)
     parser.add_argument('-p', '--updatePeriod', nargs='?', help='update periosd in seconds (default = 1 sec.)',default="1")
-    parser.add_argument('-m', '--mode', nargs='?', help='c: random colors,\nd: show date field,\nf: show watch face,\ns: show seconds hand', default='cdfs')
+    parser.add_argument('-o', '--options', nargs='?', help='c: random colors,\nd: show date field,\nf: show watch face,\ns: show seconds hand', default='cdfs')
 
     args = parser.parse_args()
 
@@ -23,36 +23,45 @@ def main(page: ft.Page) -> None:
     watchFace = False
     secondsHand = False
 
-    modes = set('cdfs')
-
     if args.updatePeriod:
         period = int(args.updatePeriod.strip())
 
-    if args.mode is None or any((c in modes) for c in args.mode.strip()):
-        parser.print_usage()
-    else:
-        randomColor = "c" in args.mode.strip()
-        watchFace = "f" in args.mode.strip()
-        dateField = "d" in args.mode.strip()
-        secondsHand = "s" in args.mode.strip()
+    randomColor = False
+    dateField = False
+    watchFace = False
+    secondsHand = False
+
+    for c in args.options.lower().strip():
+        if c == "c":
+            randomColor = True
+        elif c == "f":
+            watchFace = True
+        elif c == "d":
+            dateField = True
+        elif c == "s":
+            secondsHand = True
+        else:
+            parser.print_help()
+            sys.exit()
 
     radius = 200
     backgroundColor = ft.colors.BLUE_200 if not randomColor else random_Color()
 
     cp = watch_face(radius=radius)
     cp.shapes.extend(digitCircle(radius=radius))
-    cp.shapes.extend(tickCircle(radius=radius))
+    cp.shapes.extend(tickCircle(radius=radius, randomColor=randomColor))
     page.window.width = 2.2 * radius
     page.window.height = 2.3 * radius
     page.add(ft.Container(
-        height = radius * 2.0,
-        width = radius * 2.0,
+        alignment=ft.alignment.top_center,
+        # alignment=ft.alignment.center, # does not work, watch is translated in y axis by radius
+        height = radius * 2,
+        width = radius * 2,
         bgcolor=backgroundColor,
         padding=0,
-        content=cp,
-        expand=1
+        content=cp
     ))
-    # page.width = float("inf")
-    # page.expand()
+    page.expand=1
+    page.update()
 
 ft.app(main)
