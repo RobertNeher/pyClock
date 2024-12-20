@@ -2,7 +2,9 @@ import flet as ft
 import flet.canvas as cv
 import math
 
-def digitCircle(radius: float):
+from random_color import random_Color
+
+def digitCircle(radius: float, randomColor: bool = False):
     startAngle = math.pi
     digitAngle = 0
     delta = (2.0 * math.pi)/12.0
@@ -10,15 +12,15 @@ def digitCircle(radius: float):
     digitShapes = []
     digitSize = radius / 5.0
 
-    digitStyle = ft.TextStyle(
-        size = digitSize,
-        color = ft.colors.BLACK54,
-        weight=ft.FontWeight.BOLD
-    )
-
     while digitAngle <= startAngle + (2.0 * math.pi):
         x = radius * (1.0 + math.sin(startAngle + digitAngle))
         y = radius * (1.0 + math.cos(startAngle + digitAngle))
+
+        digitStyle = ft.TextStyle(
+            size = digitSize,
+            color = random_Color() if randomColor else ft.colors.BLACK54,
+            weight=ft.FontWeight.BOLD
+        )
 
         digitShapes.append(cv.Text(
             x=x - digitSize * math.sin(startAngle + digitAngle),

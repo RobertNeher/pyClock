@@ -47,8 +47,8 @@ def main(page: ft.Page) -> None:
     radius = 200
     backgroundColor = ft.colors.BLUE_200 if not randomColor else random_Color()
 
-    cp = watch_face(radius=radius)
-    cp.shapes.extend(digitCircle(radius=radius))
+    cp = watch_face(radius=radius, randomColor=randomColor)
+    cp.shapes.extend(digitCircle(radius=radius, randomColor=randomColor))
     cp.shapes.extend(tickCircle(radius=radius, randomColor=randomColor))
     page.window.width = 2.2 * radius
     page.window.height = 2.3 * radius
