@@ -42,6 +42,12 @@ def main(page: ft.Page) -> None:
         cp.shapes.extend(tickCircle(radius=radius, colors=colors, randomColor=randomColor))
         cp.shapes.extend(digitCircle(radius=radius, colors=colors, randomColor=randomColor))
 
+    cp = clockFace(radius=radius, colors=colors, clockFace=face, randomColor=randomColor)
+
+    if face:
+        cp.shapes.extend(digitCircle(radius=radius, colors=colors, randomColor=randomColor))
+        cp.shapes.extend(tickCircle(radius=radius, colors=colors, randomColor=randomColor))
+
     page.window.width = 2.2 * radius
     page.window.height = 2.3 * radius
     page.add(ft.Container(
