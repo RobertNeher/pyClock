@@ -15,14 +15,6 @@ from clock_face import clockFace
 def main(page: ft.Page) -> None:
     settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
 
-    # parser = argparse.ArgumentParser(description='Modify data in repository',
-    #                                 usage=f"{sys.argv[0]} [options]", allow_abbrev=False)
-    # parser.add_argument('-p', '--updatePeriod', nargs='?', help='update periosd in seconds (default = 1 sec.)',default="1")
-    # parser.add_argument('-o', '--options', nargs='?', help='c: random colors,\nd: show date field,\nf: show watch face,\ns: show seconds hand', default='cdfs')
-
-    # args = parser.parse_args()
-
-
     randomColor = settings["randomColor"]
     dateField = settings["dateField"]
     face = settings["clockFace"]
