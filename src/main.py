@@ -1,6 +1,8 @@
-import argparse
+# import argparse
+import io
 import math
 import sys
+import json
 
 import flet as ft
 import flet.canvas as cv
@@ -8,53 +10,42 @@ import flet.canvas as cv
 from random_color import random_Color
 from digit_circle import digitCircle
 from tick_circle import tickCircle
-from watch_face import watch_face
+from clock_face import clockFace
 
 def main(page: ft.Page) -> None:
-    parser = argparse.ArgumentParser(description='Modify data in repository',
-                                    usage=f"{sys.argv[0]} [options]", allow_abbrev=False)
-    parser.add_argument('-p', '--updatePeriod', nargs='?', help='update periosd in seconds (default = 1 sec.)',default="1")
-    parser.add_argument('-o', '--options', nargs='?', help='c: random colors,\nd: show date field,\nf: show watch face,\ns: show seconds hand', default='cdfs')
+    settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
 
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(description='Modify data in repository',
+    #                                 usage=f"{sys.argv[0]} [options]", allow_abbrev=False)
+    # parser.add_argument('-p', '--updatePeriod', nargs='?', help='update periosd in seconds (default = 1 sec.)',default="1")
+    # parser.add_argument('-o', '--options', nargs='?', help='c: random colors,\nd: show date field,\nf: show watch face,\ns: show seconds hand', default='cdfs')
 
-    randomColor = False
-    dateField = False
-    watchFace = False
-    secondsHand = False
+    # args = parser.parse_args()
 
-    if args.updatePeriod:
-        period = int(args.updatePeriod.strip())
 
-    randomColor = False
-    dateField = False
-    watchFace = False
-    secondsHand = False
+    randomColor = settings["randomColor"]
+    dateField = settings["dateField"]
+    face = settings["clockFace"]
+    secondsHand = settings["secondHand"]
+    period = settings["updatePeriod"]
+    radius = settings["radius"]
+    colors = settings["colors"]
 
-    for c in args.options.lower().strip():
-        if c == "c":
-            randomColor = True
-        elif c == "f":
-            watchFace = True
-        elif c == "d":
-            dateField = True
-        elif c == "s":
-            secondsHand = True
-        else:
-            parser.print_help()
-            sys.exit()
+    if face:
+        backgroundColor = colors["clockFace"] if not randomColor else random_Color()
+    else:
+        backgroundColor = ft.Colors.TRANSPARENT
 
-    radius = 200
-    backgroundColor = ft.colors.BLUE_200 if not randomColor else random_Color()
+    cp = clockFace(radius=radius, colors=colors, clockFace=face, randomColor=randomColor)
 
-    cp = watch_face(radius=radius)
-    cp.shapes.extend(digitCircle(radius=radius))
-    cp.shapes.extend(tickCircle(radius=radius, randomColor=randomColor))
+    if face:
+        cp.shapes.extend(tickCircle(radius=radius, colors=colors, randomColor=randomColor))
+        cp.shapes.extend(digitCircle(radius=radius, colors=colors, randomColor=randomColor))
+
     page.window.width = 2.2 * radius
     page.window.height = 2.3 * radius
     page.add(ft.Container(
         alignment=ft.alignment.top_center,
-        # alignment=ft.alignment.center, # does not work, watch is translated in y axis by radius
         height = radius * 2,
         width = radius * 2,
         bgcolor=backgroundColor,

@@ -4,7 +4,7 @@ import math
 
 from random_color import random_Color
 
-def tickCircle(radius: float, randomColor: bool = False): #, digitStyle: ft.TextStyle, digitSize: float):
+def tickCircle(radius: float, colors: dict, randomColor: bool = False): #, digitStyle: ft.TextStyle, digitSize: float):
     startAngle = math.pi / 2
     digitAngle = 0
     delta = (2.0 * math.pi)/60.0
@@ -23,7 +23,7 @@ def tickCircle(radius: float, randomColor: bool = False): #, digitStyle: ft.Text
             x2 = x1 - tickSizeHour * math.sin(radiant)
             y2 = y1 - tickSizeHour * math.cos(radiant)
             strokePaint = ft.Paint(
-                color=random_Color() if randomColor else ft.colors.BLACK26,
+                color=random_Color() if randomColor else colors["hourTick"],
                 stroke_width=8,
                 style=ft.PaintingStyle.STROKE
             )
@@ -32,7 +32,7 @@ def tickCircle(radius: float, randomColor: bool = False): #, digitStyle: ft.Text
             y2 = y1 - tickSizeMinute * math.cos(radiant)
              
             strokePaint = ft.Paint(
-                color=random_Color() if randomColor else ft.colors.BLACK26,
+                color=random_Color() if randomColor else colors["minuteTick"],
                 stroke_width=5,
                 style=ft.PaintingStyle.STROKE
             )

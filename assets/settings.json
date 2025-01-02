@@ -1,0 +1,23 @@
+{
+    "version": "0.0.1",
+    "settings": {
+        "radius": 250,
+        "randomColor": false,
+        "dateField": true,
+        "updatePeriod": 1,
+        "clockFace": true,
+        "secondHand": true,
+        "colors": {
+                "clockFace": "#E6E6E6",
+                "clockBoundary": "#CACACA",
+                "digits": "#A4A4A4",
+                "handsAnchor": "#CACACA",
+                "minuteTick": "#DADADA",
+                "hourTick": "#CACACA",
+                "secondHand": "#BFBFBF",
+                "minuteHand": "#999999",
+                "hourHand": "#666666",
+                "handsShape": "rounded"
+        }
+    }
+}
