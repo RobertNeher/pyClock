@@ -12,12 +12,12 @@ def digitCircle(radius: float, colors: dict, randomColor: bool):
     digitShapes = []
     digitSize = radius / 5.0
 
-        while digitAngle <= startAngle + (2.0 * math.pi):
-            digitStyle = ft.TextStyle(
-                color = random_Color() if randomColor else colors["digits"],
-                size = digitSize,
-                weight=ft.FontWeight.BOLD
-            )
+    while digitAngle <= startAngle + (2.0 * math.pi):
+        digitStyle = ft.TextStyle(
+            color = random_Color() if randomColor else colors["digits"],
+            size = digitSize,
+            weight=ft.FontWeight.BOLD
+        )
 
         x = radius * (1.0 + math.sin(startAngle + digitAngle))
         y = radius * (1.0 + math.cos(startAngle + digitAngle))
