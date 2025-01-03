@@ -24,7 +24,7 @@ def digitCircle(radius: float, colors: dict, randomColor: bool):
 
         digitStyle = ft.TextStyle(
             size = digitSize,
-            color = random_Color() if randomColor else ft.colors.BLACK54,
+            color = random_Color() if randomColor else colors["digits"],
             weight=ft.FontWeight.BOLD
         )
 

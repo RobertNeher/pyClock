@@ -11,7 +11,7 @@ def tickCircle(radius: float, colors: dict, randomColor: bool = False): #, digit
     tickSizeHour = radius * 0.1
     tickSizeMinute = radius * 0.05
     digitShapes = []
-    strokePaint = ft.Paint(color=ft.colors.BLACK26, stroke_width=5, style=ft.PaintingStyle.STROKE)
+    strokePaint = ft.Paint(color=colors["hourTick"], stroke_width=5, style=ft.PaintingStyle.STROKE)
 
     for i in range(1, 60):
         radiant = float(i) * (2 * math.pi / 60.0)

@@ -2,14 +2,24 @@
     "version": "0.0.1",
     "settings": {
         "radius": 250,
-        "randomColor": false,
+        "randomColor": true,
         "dateField": true,
         "updatePeriod": 1,
         "clockFace": true,
         "secondHand": true,
+        "hands": {
+            "hourHandFactor": 0.7,
+            "minuteHandFactor": 0.85,
+            "secondHandFactor": 0.8,
+            "hourHandWidth": 20,
+            "minutHandWiddth": 25,
+            "secondHandWidth": 20    
+        },
         "colors": {
                 "clockFace": "#E6E6E6",
                 "clockBoundary": "#CACACA",
+                "centerDot": "#FFCC00",
+                "centerTop": "#CCA300",
                 "digits": "#A4A4A4",
                 "handsAnchor": "#CACACA",
                 "minuteTick": "#DADADA",
