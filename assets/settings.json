@@ -12,8 +12,8 @@
             "minuteHandFactor": 0.85,
             "secondHandFactor": 0.8,
             "hourHandWidth": 20,
-            "minutHandWiddth": 25,
-            "secondHandWidth": 20    
+            "minuteHandWidth": 25,
+            "secondHandWidth": 15
         },
         "colors": {
                 "clockFace": "#E6E6E6",
