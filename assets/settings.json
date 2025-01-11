@@ -5,7 +5,7 @@
         "randomColor": true,
         "dateField": true,
         "updatePeriod": 1,
-        "clockFace": true,
+        "clockFace": false,
         "secondHand": true,
         "hands": {
             "hourHandFactor": 0.7,
@@ -17,7 +17,7 @@
         },
         "colors": {
                 "clockFace": "#E6E6E6",
-                "clockBoundary": "#CACACA",
+                "lunette": "#CACACA",
                 "centerDot": "#FFCC00",
                 "centerTop": "#CCA300",
                 "digits": "#A4A4A4",

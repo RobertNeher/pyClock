@@ -4,7 +4,7 @@ import math
 
 from random_color import random_Color
 
-def digitCircle(radius: float, colors: dict, randomColor: bool):
+def DigitCircle(radius: float, colors: dict, randomColor: bool):
     startAngle = math.pi
     digitAngle = 0
     delta = (2.0 * math.pi)/12.0
@@ -41,4 +41,8 @@ def digitCircle(radius: float, colors: dict, randomColor: bool):
             digit = 12
         digitAngle += delta
 
-    return digitShapes
+    return cv.Canvas(
+        digitShapes,
+        width=float("inf"),
+        expand=True,
+    )
