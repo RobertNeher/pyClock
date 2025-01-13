@@ -4,7 +4,7 @@ import math
 
 from random_color import random_Color
 
-def DigitCircle(radius: float, colors: dict, randomColor: bool):
+def DigitCircle(radius: float, colors: dict, randomColor: bool) -> cv.Canvas:
     startAngle = math.pi
     digitAngle = 0
     delta = (2.0 * math.pi)/12.0
@@ -20,7 +20,7 @@ def DigitCircle(radius: float, colors: dict, randomColor: bool):
         )
 
         x = radius * (1.0 + math.sin(startAngle + digitAngle))
-        y = radius * (1.0 + math.cos(startAngle + digitAngle))
+        y = radius * (math.cos(startAngle + digitAngle))
 
         digitStyle = ft.TextStyle(
             size = digitSize,

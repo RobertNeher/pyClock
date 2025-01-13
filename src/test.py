@@ -1,36 +1,87 @@
+from math import pi
+import time
 import flet as ft
-
+import flet.canvas as cv
 
 def main(page: ft.Page):
-    def adaptRadius(e: ft.WindowEvent) -> None:
-        radius = 0
 
-        if e.control.height > (2 * radius) or e.control.width > (2 * radius):
-            if e.control.height > e.control.width:
-                radius = e.control.height / 2
-                page.window.width = e.control.height
-            else:
-                radius = e.control.width / 2
-                page.window.height = e.control.width
+    radius = 250
+    handWidth = 20
+    handLength = radius * 0.95
+    translateX = 0
+    translateY = radius - handWidth
+    stroke_paint = ft.Paint(style=ft.PaintingStyle.STROKE)
+    fill_paint = ft.Paint(style=ft.PaintingStyle.FILL)
 
-        page.expand = 1
-        page.update()
-
-    radius = 100
-    c = ft.Container(
-         width = 200,
-         height = 300,
-         bgcolor=ft.Colors.TRANSPARENT
+    hand = cv.Canvas(
+        [
+            # cv.Circle(translateX, translateY, radius * 0.05, paint=fill_paint),
+            cv.Path([
+                cv.Path.MoveTo(
+                    translateX,
+                    translateY
+                ),
+                cv.Path.LineTo(
+                    translateX + 0,
+                    translateY + handWidth / 2
+                ),
+                cv.Path.LineTo(
+                    translateX + handLength * 0.95,
+                    translateY + handWidth / 2
+                ),
+                cv.Path.LineTo(
+                    translateX + handLength,
+                    translateY + 0
+                ),
+                cv.Path.Close()
+            ],
+            paint=fill_paint
+            ),
+            cv.Path([
+                    cv.Path.MoveTo(
+                        translateX,
+                        translateY
+                    ),
+                    cv.Path.LineTo(
+                        translateX + 0,
+                        translateY - handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength * 0.95,
+                        translateY - handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength,
+                        translateY + 0
+                    ),
+                    cv.Path.Close()
+                ],
+                paint=stroke_paint
+            ),
+            # cv.Circle(translateX, translateY, radius * 0.04, paint=stroke_paint),
+        ],
+        # width=float("inf"),
+        expand=1,
+        rotate=ft.transform.Rotate(0, alignment=ft.alignment.center),
+        animate_rotation=ft.animation.Animation(300, ft.AnimationCurve.BOUNCE_OUT),
     )
-    page.bgcolor = ft.Colors.TRANSPARENT
-    page.window.bgcolor = ft.Colors.TRANSPARENT
-    page.window.width = 200,
-    page.window.height = 300,
-    page.on_resized=adaptRadius
+
+    page.window.height = 2 * radius
+    page.window.width = 2 * radius
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.add(
-         c,
-         ft.Text(radius))
-    page.expand = 1
-    page.update()
+        hand
+    )
+    page.expand=1
+
+    angle = -pi/2
+
+    while angle <= 2*pi:
+        hand.rotate.angle = angle
+        page.update()
+        time.sleep(0.5)
+        angle += 2*pi/60
+
 
 ft.app(main)

@@ -1,15 +1,33 @@
+import copy
+
+from math import pi
+from enum import Flag, auto
 from datetime import datetime
+
 import flet as ft
 import flet.canvas as cv
 
 from random_color import random_Color
+class HandType(Flag):
+    HOUR = auto()
+    MINUTE = auto()
+    SECOND = auto()
+    ALL = HOUR | MINUTE | SECOND
 
-def arrowHand(radiant: float, radius: float, translateX: float, translateY: float, settings: dict, randomColor: bool) -> list:
+class HandShape(Flag):
+    ARROW = auto()
+    ROUNDED = auto()
+    ELLIPTICAL = auto()
+
+
+def arrowHand(handType: HandType, radius: float, settings: dict, randomColor: bool) -> ft.Control:
     colors = settings["colors"]
     handSettings = settings["hands"]
 
-    handsCanvas = cv.Canvas
-    handsCanvas.shapes = []
+    translateX = 0
+    translateY = 0
+
+    time = datetime.now()
 
     centerDotPaint = ft.Paint(
         style=ft.PaintingStyle.FILL,
@@ -20,81 +38,121 @@ def arrowHand(radiant: float, radius: float, translateX: float, translateY: floa
         stroke_width=3,
         color=random_Color() if randomColor else colors["centerTop"]
     )
-    secondHandPaintStroke = ft.Paint(
+
+    handPaintStroke = ft.Paint(
         style=ft.PaintingStyle.STROKE,
-        stroke_width=2,
-        color=random_Color() if randomColor else colors["secondHand"]
+        stroke_width=2
     )
-    secondHandPaintFill = ft.Paint(
-        style=ft.PaintingStyle.FILL,
-        stroke_width=2,
-        color= random_Color() if randomColor else colors["secondHand"]
-    )
-    handsShape = [
+
+    angle = -pi/2
+
+    if handType == HandType.SECOND:
+        handWidth = handSettings["secondHandWidth"]
+        handLength = radius * handSettings["secondHandFactor"]
+        handPaintStroke.color = random_Color() if randomColor else colors["secondHand"]
+        angle += (2 * pi) / 60 * time.second
+
+    elif handType == HandType.MINUTE:
+        handWidth = handSettings["minuteHandWidth"]
+        handLength = radius * handSettings["minuteHandFactor"]
+        handPaintStroke.color = random_Color() if randomColor else colors["minuteHand"]
+        angle += (2 * pi) / 60 * time.minute
+
+    elif handType == HandType.HOUR:
+        handWidth = handSettings["hourHandWidth"]
+        handLength = radius * handSettings["hourHandFactor"]
+        handPaintStroke.color = random_Color() if randomColor else colors["hourHand"]
+        angle += (2 * pi) / 12 * (time.hour % 12)
+
+    else: # never reachable
+        handWidth = radius * 0.05
+        handLength = radius * 0.95
+        angle += 0
+
+    # translateX -= handWidth
+    translateY -= handWidth
+    handPaintFill = copy.deepcopy(handPaintStroke)
+    handPaintFill.style = ft.PaintingStyle.FILL
+    handPaintFill.color = random_Color() if randomColor else colors["hourHand"]
+    hand = cv.Canvas([
             cv.Circle(translateX, translateY, radius * 0.05, paint=centerDotPaint),
             cv.Path([
-                cv.Path.MoveTo(
-                    translateX,
-                    translateY
-                ),
-                cv.Path.LineTo(
-                    translateX + 0,
-                    translateY + handSettings["secondHandWidth"] / 2
-                ),
-                cv.Path.LineTo(
-                    translateX + radius * handSettings["secondHandFactor"] * 0.95,
-                    translateY + handSettings["secondHandWidth"] / 2
-                ),
-                cv.Path.LineTo(
-                    translateX + radius * handSettings["secondHandFactor"],
-                    translateY + 0
-                ),
-                cv.Path.Close()
-            ],
-            paint=secondHandPaintFill
-        ),
-        cv.Path([
-                cv.Path.MoveTo(
-                    translateX,
-                    translateY
-                ),
-                cv.Path.LineTo(
-                    translateX + 0,
-                    translateY - handSettings["secondHandWidth"] / 2
-                ),
-                cv.Path.LineTo(
-                    translateX + radius * handSettings["secondHandFactor"] * 0.95,
-                    translateY - handSettings["secondHandWidth"] / 2
-                ),
-                cv.Path.LineTo(
-                    translateX + radius * handSettings["secondHandFactor"],
-                    translateY + 0
-                ),
-                cv.Path.Close()
-            ],
-            paint=secondHandPaintFill
-        ),
-        cv.Circle(translateX, translateY, radius * 0.04, paint=centerCirclePaint),
-    ]
+                    cv.Path.MoveTo(
+                        translateX,
+                        translateY
+                    ),
+                    cv.Path.LineTo(
+                        translateX + 0,
+                        translateY + handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength * 0.95,
+                        translateY + handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength,
+                        translateY + 0
+                    ),
+                    cv.Path.Close()
+                ],
+                paint=handPaintStroke
+            ),
+            cv.Path([
+                    cv.Path.MoveTo(
+                        translateX,
+                        translateY
+                    ),
+                    cv.Path.LineTo(
+                        translateX + 0,
+                        translateY - handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength * 0.95,
+                        translateY - handWidth / 2
+                    ),
+                    cv.Path.LineTo(
+                        translateX + handLength,
+                        translateY + 0
+                    ),
+                    cv.Path.Close()
+                ],
+                paint=handPaintFill
+            ),
+            cv.Circle(translateX, translateY, radius * 0.04, paint=centerCirclePaint),
+        ],
+        expand=1,
+        rotate=ft.transform.Rotate(angle, alignment=ft.alignment.center),
+        animate_rotation=ft.animation.Animation(300, ft.AnimationCurve.BOUNCE_OUT),
+    )
 
-    return handsShape
+    return hand
 
 
-def clockHands(radiant: float, handType: str, radius:float, settings:dict, randomColor:bool):
-    if handType == "arrow":
-        return arrowHand(
-            radiant=radiant,
-            radius=radius,
-            translateX=radius,
-            translateY=radius,
-            settings=settings,
-            randomColor=randomColor
+def Hands(handType: HandType, settings:dict, shape: HandShape, radius:float = 200, randomColor:bool = False):
+    if shape == HandShape.ARROW:
+
+        if handType == HandType.SECOND:
+            return arrowHand(
+                handType=HandType.SECOND,
+                radius=radius,
+                settings=settings,
+                randomColor=randomColor
         )
-    # elif handType == "rounded":
-    #     return roundedHand(
-    #         radius=radius,
-    #         translateX=radius,
-    #         translateY=radius,
-    #         settings=settings,
-    #         randomColor=randomColor
-    #     )
+
+        if handType == HandType.MINUTE:
+            return arrowHand(
+                    handType=HandType.MINUTE,
+                    radius=radius,
+                    settings=settings,
+                    randomColor=randomColor
+            )
+
+        if handType == HandType.HOUR:
+            return arrowHand(
+                    handType=HandType.HOUR,
+                    radius=radius,
+                    settings=settings,
+                    randomColor=randomColor
+            )
+
+    return None
