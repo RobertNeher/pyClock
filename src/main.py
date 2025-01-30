@@ -86,13 +86,14 @@ def main(page: ft.Page) -> None:
     )
 
     while True:
+        print(datetime.now())
         second = datetime.now().second
         minute = datetime.now().minute
         hour = datetime.now().hour
 
         secondHand.rotate = ft.transform.Rotate((second * (2*pi)/60) - pi/2)
         minuteHand.rotate = ft.transform.Rotate((minute * (2*pi)/60) - pi/2)
-        hourHand.rotate = ft.transform.Rotate((hour * (2*pi)/60) - pi/2)
+        hourHand.rotate = ft.transform.Rotate(((hour % 12) * (2*pi)/12) - pi/2)
 
         page.expand=1
         page.update()
