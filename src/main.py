@@ -80,23 +80,48 @@ def main(page: ft.Page) -> None:
         )
     )
 
-    page.add(ft.Stack(
-        [face, secondHand, minuteHand, hourHand, centerPin],
-        alignment=ft.alignment.center),
+    clockApp = ft.Stack(
+        [face],
+        alignment=ft.alignment.center
     )
 
+    if settings["secondHand"]:
+        clockApp.controls.extend([secondHand])
+
+    clockApp.controls.extend([minuteHand, hourHand, centerPin])
+
+    page.add(clockApp)
+
+    # second = 0
+    # minute = 0
+    # hour = 0
     while True:
-        print(datetime.now())
         second = datetime.now().second
         minute = datetime.now().minute
-        hour = datetime.now().hour
+        hour = datetime.now().hour % 12
 
-        secondHand.rotate = ft.transform.Rotate((second * (2*pi)/60) - pi/2)
-        minuteHand.rotate = ft.transform.Rotate((minute * (2*pi)/60) - pi/2)
-        hourHand.rotate = ft.transform.Rotate(((hour % 12) * (2*pi)/12) - pi/2)
+        if settings["secondHand"]:
+            secondHand.rotate = ft.transform.Rotate((second * 2 * pi/60) - pi/2)
 
-        page.expand=1
+        minuteHand.rotate = ft.transform.Rotate(((minute + (1 * second/60)) * (2*pi)/60) - pi/2)
+        hourHand.rotate = ft.transform.Rotate(((hour * 2 * pi/12) + (5 * minute/60) * 2 * pi/60) - pi/2)
+
+        page.expand = 1
         page.update()
+
+        # second += 1
+
+        # if second > 60:
+        #     second = 0
+        #     minute += 1
+
+        #     if minute > 60:
+        #         minute = 0
+        #         hour += 1
+
+        #         if hour > 24:
+        #             hour = 0
+        
 
         time.sleep(1)
 

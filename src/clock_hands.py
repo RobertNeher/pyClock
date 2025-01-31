@@ -9,7 +9,7 @@ class HandType(Enum):
     MINUTE = auto()
     HOUR = auto()
 
-def spindle(radius: float, translateX: float, translateY: float, settings: dict, randomColor: bool):
+def spindle(radius: float, settings: dict, randomColor: bool):
     colors = settings["colors"]
 
     centerDotPaint = ft.Paint(
@@ -23,11 +23,11 @@ def spindle(radius: float, translateX: float, translateY: float, settings: dict,
     )
 
     return [
-        cv.Circle(translateX, translateY, radius * 0.05, paint=centerDotPaint),
-        cv.Circle(translateX, translateY, radius * 0.04, paint=centerCirclePaint),
+        cv.Circle(radius * 0.05, paint=centerDotPaint),
+        cv.Circle(radius * 0.04, paint=centerCirclePaint),
     ]
 
-def arrowHand(handType: HandType, radius: float, translateX: float, translateY: float, settings: dict, randomColor: bool) -> list:
+def arrowHand(handType: HandType, radius: float, settings: dict, randomColor: bool) -> list:
     colors = settings["colors"]
     handSettings = settings["hands"]
 
@@ -69,41 +69,43 @@ def arrowHand(handType: HandType, radius: float, translateX: float, translateY: 
             # second hand
             cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY + handSettings["secondHandWidth"] / 2.0
+                        0,
+                        handSettings["secondHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["secondHandFactor"] * 0.9,
-                        translateY + handSettings["secondHandWidth"] / 2.0
+                        radius * handSettings["secondHandFactor"] * 0.9,
+                        handSettings["secondHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["secondHandFactor"],
-                        translateY + 0
-                    )
+                        radius * handSettings["secondHandFactor"],
+                        0
+                    ),
+                    cv.Path.Close(),
                 ],
                 paint=secondHandPaintStroke
             ),
             cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY - handSettings["secondHandWidth"] / 2.0
+                        0,
+                        -handSettings["secondHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["secondHandFactor"] * 0.9,
-                        translateY - handSettings["secondHandWidth"] / 2.0
+                        radius * handSettings["secondHandFactor"] * 0.9,
+                        -handSettings["secondHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["secondHandFactor"],
-                        translateY + 0
-                    )
+                        radius * handSettings["secondHandFactor"],
+                        0
+                    ),
+                    cv.Path.Close(),
                 ],
                 paint=secondHandPaintFill
             )
@@ -113,41 +115,43 @@ def arrowHand(handType: HandType, radius: float, translateX: float, translateY: 
         return [
                 cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY + handSettings["minuteHandWidth"] / 2.0
+                        0,
+                        handSettings["minuteHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["minuteHandFactor"] * 0.9,
-                        translateY + handSettings["minuteHandWidth"] / 2.0
+                        radius * handSettings["minuteHandFactor"] * 0.9,
+                        handSettings["minuteHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["minuteHandFactor"],
-                        translateY + 0
-                    )
+                        radius * handSettings["minuteHandFactor"],
+                        0
+                    ),
+                    cv.Path.Close(),
                 ],
                 paint=minuteHandPaintStroke
             ),
             cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY - handSettings["minuteHandWidth"] / 2.0
+                        0,
+                        -handSettings["minuteHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["minuteHandFactor"] * 0.9,
-                        translateY - handSettings["minuteHandWidth"] / 2.0
+                        radius * handSettings["minuteHandFactor"] * 0.9,
+                        -handSettings["minuteHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["minuteHandFactor"],
-                        translateY + 0
-                    )
+                        radius * handSettings["minuteHandFactor"],
+                        0
+                    ),
+                    cv.Path.Close(),
                 ],
                 paint=minuteHandPaintFill
             )
@@ -157,40 +161,40 @@ def arrowHand(handType: HandType, radius: float, translateX: float, translateY: 
         return [
             cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY + handSettings["hourHandWidth"] / 2.0
+                        0,
+                        handSettings["hourHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["hourHandFactor"] * 0.9,
-                        translateY + handSettings["hourHandWidth"] / 2.0
+                        radius * handSettings["hourHandFactor"] * 0.9,
+                        handSettings["hourHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["hourHandFactor"],
-                        translateY + 0
+                        radius * handSettings["hourHandFactor"],
+                        0
                     )
                 ],
                 paint=hourHandPaintStroke
             ),
             cv.Path([
                     cv.Path.MoveTo(
-                            translateX,
-                            translateY
+                        0,
+                        0
                     ),
                     cv.Path.LineTo(
-                        translateX + 0,
-                        translateY - handSettings["hourHandWidth"] / 2.0
+                        0,
+                        -handSettings["hourHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["hourHandFactor"] * 0.9,
-                        translateY - handSettings["hourHandWidth"] / 2.0
+                        radius * handSettings["hourHandFactor"] * 0.9,
+                        -handSettings["hourHandWidth"] / 2.0
                     ),
                     cv.Path.LineTo(
-                        translateX + radius * handSettings["hourHandFactor"],
-                        translateY + 0
+                        radius * handSettings["hourHandFactor"],
+                        0
                     )
                 ],
                 paint=hourHandPaintFill
@@ -200,39 +204,30 @@ def arrowHand(handType: HandType, radius: float, translateX: float, translateY: 
 def handsSpindle(radius:float, settings:dict, randomColor:bool):
     return spindle(
         radius=radius,
-        translateX=0,
-        translateY=0,
         settings=settings,
         randomColor=randomColor
     )
 
-def clockSecondHands(radius:float, settings:dict, randomColor:bool):
+def clockSecondHand(radius:float, settings:dict, randomColor:bool):
     return arrowHand(
         handType=HandType.SECOND,
         radius=radius,
-        translateX=0,
-        translateY=0,
         settings=settings,
         randomColor=randomColor
     )
 
-def clockMinuteHands(radius:float, settings:dict, randomColor:bool):
+def clockMinuteHand(radius:float, settings:dict, randomColor:bool):
     return arrowHand(
         handType=HandType.MINUTE,
         radius=radius,
-        translateX=0,
-        translateY=0,
         settings=settings,
         randomColor=randomColor
     )
 
-
-def clockHourHands(radius:float, settings:dict, randomColor:bool):
+def clockHourHand(radius:float, settings:dict, randomColor:bool):
     return arrowHand(
         handType=HandType.HOUR,
         radius=radius,
-        translateX=0,
-        translateY=0,
         settings=settings,
         randomColor=randomColor
     )
