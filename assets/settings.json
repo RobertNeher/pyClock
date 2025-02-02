@@ -7,13 +7,14 @@
         "updatePeriod": 1,
         "clockFace": true,
         "secondHand": true,
+        "smoothHands": true,
         "hands": {
-            "hourHandFactor": 0.7,
-            "minuteHandFactor": 0.85,
-            "secondHandFactor": 0.8,
-            "hourHandWidth": 20,
-            "minuteHandWidth": 25,
-            "secondHandWidth": 15
+            "hourHandFactor": 0.65,
+            "minuteHandFactor": 0.9,
+            "secondHandFactor": 0.85,
+            "hourHandWidth": 10,
+            "minuteHandWidth": 15,
+            "secondHandWidth": 3
         },
         "colors": {
                 "clockFace": "#E6E6E6",

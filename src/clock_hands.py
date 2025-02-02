@@ -23,8 +23,8 @@ def spindle(radius: float, settings: dict, randomColor: bool):
     )
 
     return [
-        cv.Circle(radius * 0.05, paint=centerDotPaint),
-        cv.Circle(radius * 0.04, paint=centerCirclePaint),
+        cv.Circle(0, 0, radius * 0.05, paint=centerDotPaint),
+        cv.Circle(0, 0, radius * 0.04, paint=centerCirclePaint),
     ]
 
 def arrowHand(handType: HandType, radius: float, settings: dict, randomColor: bool) -> list:
@@ -200,34 +200,3 @@ def arrowHand(handType: HandType, radius: float, settings: dict, randomColor: bo
                 paint=hourHandPaintFill
             ),
         ]
-
-def handsSpindle(radius:float, settings:dict, randomColor:bool):
-    return spindle(
-        radius=radius,
-        settings=settings,
-        randomColor=randomColor
-    )
-
-def clockSecondHand(radius:float, settings:dict, randomColor:bool):
-    return arrowHand(
-        handType=HandType.SECOND,
-        radius=radius,
-        settings=settings,
-        randomColor=randomColor
-    )
-
-def clockMinuteHand(radius:float, settings:dict, randomColor:bool):
-    return arrowHand(
-        handType=HandType.MINUTE,
-        radius=radius,
-        settings=settings,
-        randomColor=randomColor
-    )
-
-def clockHourHand(radius:float, settings:dict, randomColor:bool):
-    return arrowHand(
-        handType=HandType.HOUR,
-        radius=radius,
-        settings=settings,
-        randomColor=randomColor
-    )
