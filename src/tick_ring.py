@@ -4,10 +4,7 @@ import math
 
 from random_color import random_Color
 
-def tickCircle(radius: float, colors: dict, randomColor: bool = False): #, digitStyle: ft.TextStyle, digitSize: float):
-    startAngle = math.pi / 2
-    digitAngle = 0
-    delta = (2.0 * math.pi)/60.0
+def tickRing(radius: float, colors: dict, randomColor: bool = False): #, digitStyle: ft.TextStyle, digitSize: float):
     tickSizeHour = radius * 0.1
     tickSizeMinute = radius * 0.05
     digitShapes = []

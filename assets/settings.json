@@ -3,7 +3,8 @@
     "settings": {
         "radius": 250,
         "randomColor": true,
-        "dateField": true,
+        "dateWindow": true,
+        "dateFormat": "%d%b",
         "updatePeriod": 1,
         "clockFace": true,
         "secondHand": true,
@@ -28,7 +29,9 @@
                 "secondHand": "#BFBFBF",
                 "minuteHand": "#999999",
                 "hourHand": "#666666",
-                "handsShape": "rounded"
-        }
+                "monthDays": "#BFBFBF",
+                "dateField": "#A4A4A4",
+                "dateFieldFrame": "#666666"
+            }
     }
 }

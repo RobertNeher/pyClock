@@ -1,4 +1,3 @@
-# import argparse
 import io
 import json
 import time
@@ -11,17 +10,15 @@ from math import pi
 
 from clock_hands import arrowHand, spindle, HandType
 from random_color import random_Color
-from digit_circle import digitCircle
-from tick_circle import tickCircle
+from hour_ring import hourRing
+from tick_ring import tickRing
 from clock_face import clockFace
+from date_window import dateWindow
 
 def main(page: ft.Page) -> None:
     settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
     randomColor = settings["randomColor"]
-    dateField = settings["dateField"]
     face = settings["clockFace"]
-    secondsHand = settings["secondHand"]
-    period = settings["updatePeriod"]
     radius = settings["radius"]
     colors = settings["colors"]
 
@@ -29,11 +26,12 @@ def main(page: ft.Page) -> None:
 
     clockFaceCanvas = clockFace(radius=radius, colors=colors, clockFace=face, randomColor=randomColor)
 
-    clockFaceCanvas.shapes.extend(tickCircle(radius=radius, colors=colors, randomColor=randomColor))
-    clockFaceCanvas.shapes.extend(digitCircle(radius=radius, colors=colors, randomColor=randomColor))
-
-    page.window.width = 2.2 * radius
-    page.window.height = 2.3 * radius
+    clockFaceCanvas.shapes.extend(tickRing(radius=radius, colors=colors, randomColor=randomColor))
+    clockFaceCanvas.shapes.extend(hourRing(radius=radius, colors=colors, randomColor=randomColor))
+    # clockFaceCanvas.shapes.extend(monthDayRing(radius=radius, settings=settings, randomColor=randomColor))
+ 
+    if settings["dateWindow"]:
+        clockFaceCanvas.shapes.extend(dateWindow(radius=radius, colors=colors, randomColor=randomColor))
 
     face = ft.Container(
             alignment=ft.alignment.top_center,
@@ -96,6 +94,11 @@ def main(page: ft.Page) -> None:
     clockApp.controls.append(centerPin)
 
     page.add(clockApp)
+    page.window.width = 2.2 * radius
+    page.window.height = 2.2 * radius
+    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
+    page.vertical_alignment = ft.CrossAxisAlignment.CENTER
+    page.expand = 1
 
     while True:
         second = datetime.now().second
@@ -112,10 +115,8 @@ def main(page: ft.Page) -> None:
             minuteHand.rotate = ft.transform.Rotate((minute * 2*pi/60) - pi/2)
             hourHand.rotate = ft.transform.Rotate((hour * 2 * pi/12) - pi/2)
 
-
-        page.expand = 1
         page.update()
 
-        time.sleep(1)
+        time.sleep(settings["updatePeriod"])
 
 ft.app(main)
