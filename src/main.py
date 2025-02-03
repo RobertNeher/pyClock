@@ -31,7 +31,7 @@ def main(page: ft.Page) -> None:
     # clockFaceCanvas.shapes.extend(monthDayRing(radius=radius, settings=settings, randomColor=randomColor))
  
     if settings["dateWindow"]:
-        clockFaceCanvas.shapes.extend(dateWindow(radius=radius, colors=colors, randomColor=randomColor))
+        clockFaceCanvas.shapes.extend(dateWindow(radius=radius, settings=settings, randomColor=randomColor))
 
     face = ft.Container(
             alignment=ft.alignment.top_center,
@@ -98,6 +98,11 @@ def main(page: ft.Page) -> None:
     page.window.height = 2.2 * radius
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.CrossAxisAlignment.CENTER
+
+    if not face:
+        page.bgcolor = ft.Colors.TRANSPARENT
+        page.window.bgcolor = ft.Colors.TRANSPARENT
+
     page.expand = 1
 
     while True:
