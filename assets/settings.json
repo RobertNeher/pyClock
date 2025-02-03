@@ -2,11 +2,11 @@
     "version": "0.0.1",
     "settings": {
         "radius": 250,
-        "randomColor": true,
+        "randomColor": false,
         "dateWindow": true,
-        "dateFormat": "%d%b",
+        "dateFormat": "%d|%b",
         "updatePeriod": 1,
-        "clockFace": true,
+        "clockFace": false,
         "secondHand": true,
         "smoothHands": true,
         "hands": {
