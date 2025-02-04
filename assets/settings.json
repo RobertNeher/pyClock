@@ -6,7 +6,7 @@
         "dateWindow": true,
         "dateFormat": "%d|%b",
         "updatePeriod": 1,
-        "clockFace": true,
+        "clockFace": false,
         "secondHand": true,
         "smoothHands": true,
         "hands": {

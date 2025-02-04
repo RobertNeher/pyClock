@@ -21,7 +21,7 @@ def dateWindow(radius: float, settings: dict, randomColor: bool = False) -> list
     )
     dateFramePaint = ft.Paint(
         color=random_Color() if randomColor else colors["dateFieldFrame"],
-        stroke_width=2,
+        stroke_width=3,
         style=ft.PaintingStyle.STROKE
     )
 
