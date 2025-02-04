@@ -22,6 +22,11 @@ def main(page: ft.Page) -> None:
     radius = settings["radius"]
     colors = settings["colors"]
 
+    page.window.width = 2.3 * radius
+    page.window.height = 2.3 * radius
+    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
+    page.vertical_alignment = ft.CrossAxisAlignment.CENTER
+
     backgroundColor = colors["clockFace"] if not randomColor else random_Color()
 
     clockFaceCanvas = clockFace(radius=radius, colors=colors, clockFace=face, randomColor=randomColor)
@@ -33,11 +38,11 @@ def main(page: ft.Page) -> None:
     if settings["dateWindow"]:
         clockFaceCanvas.shapes.extend(dateWindow(radius=radius, settings=settings, randomColor=randomColor))
 
-    face = ft.Container(
+    clock_Face = ft.Container(
             alignment=ft.alignment.top_center,
             height = radius * 2,
             width = radius * 2,
-            bgcolor=backgroundColor,
+            bgcolor=ft.Colors.TRANSPARENT if not face else backgroundColor,
             padding=0,
             content=clockFaceCanvas,
     )
@@ -82,7 +87,7 @@ def main(page: ft.Page) -> None:
     )
 
     clockApp = ft.Stack(
-        [face],
+        [clock_Face],
         alignment=ft.alignment.center
     )
 
@@ -94,15 +99,11 @@ def main(page: ft.Page) -> None:
     clockApp.controls.append(centerPin)
 
     page.add(clockApp)
-    page.window.width = 2.2 * radius
-    page.window.height = 2.2 * radius
-    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
-    page.vertical_alignment = ft.CrossAxisAlignment.CENTER
 
     if not face:
-        page.bgcolor = ft.Colors.TRANSPARENT
         page.window.bgcolor = ft.Colors.TRANSPARENT
-
+        page.bgcolor = ft.Colors.TRANSPARENT
+    
     page.expand = 1
 
     while True:
