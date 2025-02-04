@@ -27,16 +27,16 @@ def dateWindow(radius: float, settings: dict, randomColor: bool = False) -> list
 
     shapes = [
         cv.Rect(
-            x=radius * 1.43,
-            y=radius * 0.95,
+            x=radius * 1.3,
+            y=radius * 0.94,
             border_radius=2,
             paint=dateFramePaint,
             width=radius * 0.35,
-            height=radius * 0.15,
+            height=radius * 0.14,
         ),
         cv.Text(
             alignment = ft.alignment.center,
-            x = radius * 1.6,
+            x = radius * 1.48,
             y = radius,
             style = dateTextStyle,
             text = datetime.now().strftime(settings["dateFormat"])
