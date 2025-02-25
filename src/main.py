@@ -13,7 +13,7 @@ from random_color import random_Color
 from hour_ring import hourRing
 from tick_ring import tickRing
 from clock_face import clockFace
-from date_window import dateWindow
+from complications import weekDay, dateWindow
 
 def main(page: ft.Page) -> None:
     settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
@@ -21,6 +21,7 @@ def main(page: ft.Page) -> None:
     face = settings["clockFace"]
     radius = settings["radius"]
     colors = settings["colors"]
+    complications = settings["complications"]
 
     page.window.width = 2.3 * radius
     page.window.height = 2.3 * radius
@@ -33,13 +34,9 @@ def main(page: ft.Page) -> None:
 
     clockFaceCanvas.shapes.extend(tickRing(radius=radius, colors=colors, randomColor=randomColor))
     clockFaceCanvas.shapes.extend(hourRing(radius=radius, colors=colors, randomColor=randomColor))
-    # clockFaceCanvas.shapes.extend(monthDayRing(radius=radius, settings=settings, randomColor=randomColor))
- 
-    if settings["dateWindow"]:
-        clockFaceCanvas.shapes.extend(dateWindow(radius=radius, settings=settings, randomColor=randomColor))
 
     clock_Face = ft.Container(
-            alignment=ft.alignment.top_center,
+            alignment=ft.alignment.top_left,
             height = radius * 2,
             width = radius * 2,
             bgcolor=ft.Colors.TRANSPARENT if not face else backgroundColor,
@@ -83,29 +80,40 @@ def main(page: ft.Page) -> None:
             radius=radius,
             settings=settings,
             randomColor=randomColor
-        )
+        ),
     )
 
+    date_Window = cv.Canvas(
+        shapes=dateWindow(radius=radius, settings=settings, randomColor=randomColor),
+    )
+
+    week_Day = cv.Canvas(
+        shapes=weekDay(radius=radius, settings=settings, randomColor=randomColor),
+    )
     clockApp = ft.Stack(
-        [clock_Face],
+        [date_Window, clock_Face],
         alignment=ft.alignment.center
     )
 
     clockApp.controls.extend([hourHand, minuteHand])
-
-    if settings["secondHand"]:
-        clockApp.controls.extend([secondHand])
-
     clockApp.controls.append(centerPin)
 
+    if settings["secondHand"]:
+        clockApp.controls.append(secondHand)
+
+    if complications["dateWindow"]:
+        clockApp.controls.append(date_Window)
+        
+    if complications["weekDay"]:
+        clockApp.controls.append(week_Day)
+
     page.add(clockApp)
+    page.expand = 1
 
     if not face:
         page.window.bgcolor = ft.Colors.TRANSPARENT
         page.bgcolor = ft.Colors.TRANSPARENT
     
-    page.expand = 1
-
     while True:
         second = datetime.now().second
         minute = datetime.now().minute

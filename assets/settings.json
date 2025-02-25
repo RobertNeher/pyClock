@@ -3,10 +3,9 @@
     "settings": {
         "radius": 250,
         "randomColor": true,
-        "dateWindow": true,
         "dateFormat": "%d|%b",
         "updatePeriod": 1,
-        "clockFace": false,
+        "clockFace": true,
         "secondHand": true,
         "smoothHands": true,
         "hands": {
@@ -32,6 +31,10 @@
                 "monthDays": "#BFBFBF",
                 "dateField": "#A4A4A4",
                 "dateFieldFrame": "#666666"
+            },
+            "complications": {
+                "dateWindow": true,
+                "weekDay": true
             }
     }
 }

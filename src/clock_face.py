@@ -30,7 +30,5 @@ def clockFace(radius: float, colors: dict, clockFace: bool, randomColor: bool):
         ]
 
     return cv.Canvas(
-        canvasContent,
-        width=float("inf"),
-        expand=True,
+        shapes=canvasContent,
     )
