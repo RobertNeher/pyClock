@@ -1,6 +1,5 @@
 import flet as ft
 import flet.canvas as cv
-import calendar
 
 from datetime import datetime
 from math import sin, cos, pi
@@ -10,7 +9,6 @@ from random_color import random_Color
 def weekDayRing(x: float, y: float, radius: float, textTurn: bool, colors: dict, randomColor: bool):
     weekDays = ["Mon", "Die", "Mit", "Don", "Fri", "Sam", "Son"]
     today = datetime.now()
-    monthRange = calendar.monthrange(today.year, today.month)
     startAngle = pi
     delta = (2.0 * pi)/len(weekDays)
     digitAngle = -delta
