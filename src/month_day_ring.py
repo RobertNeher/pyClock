@@ -7,7 +7,7 @@ from math import sin, cos, pi
 
 from random_color import random_Color
 
-def monthDayRing(x: float, y: float, radius: float, colors: dict, randomColor: bool):
+def monthDayRing(x: float, y: float, radius: float, digitTurn: bool, colors: dict, randomColor: bool):
     today = datetime.now()
     monthRange = calendar.monthrange(today.year, today.month)
     startAngle = pi
@@ -32,7 +32,7 @@ def monthDayRing(x: float, y: float, radius: float, colors: dict, randomColor: b
             text=str(i),
             style=digitStyle,
             alignment=ft.alignment.center,
-            rotate=(2 * pi) - digitAngle
+            rotate=((2 * pi) - digitAngle) if digitTurn else 0
         ))
         digitAngle -= delta
 

@@ -4,29 +4,29 @@ from math import sin, cos, pi
 
 from random_color import random_Color
 
-def hourRing(x: float, y: float, radius: float, colors: dict, randomColor: bool):
+def hourRing(x: float, y: float, radius: float, digitTurn: bool, colors: dict, randomColor: bool):
     startAngle = pi
     delta = (2 * pi)/12
-    charAngle = -delta
-    charShapes = []
-    charSize = radius / 5
+    digitAngle = -delta
+    digitShapes = []
+    digitSize = radius / 5
 
     for i in range(1, 13):
     # while charAngle <= startAngle + (2 * pi):
-        charStyle = ft.TextStyle(
+        digitStyle = ft.TextStyle(
             color = random_Color() if randomColor else colors["digits"],
-            size = charSize,
+            size = digitSize,
             weight=ft.FontWeight.NORMAL
         )
 
-        charShapes.append(cv.Text(
-            x = x + (radius + charSize) * sin(startAngle + charAngle),
-            y = y + (radius + charSize) * cos(startAngle + charAngle),
+        digitShapes.append(cv.Text(
+            x = x + (radius + digitSize) * sin(startAngle + digitAngle),
+            y = y + (radius + digitSize) * cos(startAngle + digitAngle),
             text=str(i),
-            style=charStyle,
+            style=digitStyle,
             alignment=ft.alignment.center,
-            rotate=(2 * pi) - charAngle
+            rotate=((2 * pi) - digitAngle) if digitTurn else 0
         ))
-        charAngle -= delta
+        digitAngle -= delta
 
-    return charShapes
+    return digitShapes
