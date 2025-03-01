@@ -1,38 +1,32 @@
 import flet as ft
 import flet.canvas as cv
-import math
+from math import sin, cos, pi
 
 from random_color import random_Color
 
-def hourRing(radius: float, colors: dict, randomColor: bool):
-    startAngle = math.pi
-    digitAngle = 0
-    delta = (2.0 * math.pi)/12.0
-    digit = 12
-    digitShapes = []
-    digitSize = radius / 5.0
+def hourRing(x: float, y: float, radius: float, colors: dict, randomColor: bool):
+    startAngle = pi
+    delta = (2 * pi)/12
+    charAngle = -delta
+    charShapes = []
+    charSize = radius / 5
 
-    while digitAngle <= startAngle + (2.0 * math.pi):
-        x = radius * (1.0 + math.sin(startAngle + digitAngle))
-        y = radius * (1.0 + math.cos(startAngle + digitAngle))
-
-        digitStyle = ft.TextStyle(
-            size = digitSize,
+    for i in range(1, 13):
+    # while charAngle <= startAngle + (2 * pi):
+        charStyle = ft.TextStyle(
             color = random_Color() if randomColor else colors["digits"],
-            weight=ft.FontWeight.BOLD
+            size = charSize,
+            weight=ft.FontWeight.NORMAL
         )
 
-        digitShapes.append(cv.Text(
-            x=x - digitSize * math.sin(startAngle + digitAngle),
-            y=y - digitSize * math.cos(startAngle + digitAngle),
-            text=str(digit),
-            style=digitStyle,
+        charShapes.append(cv.Text(
+            x = x + (radius + charSize) * sin(startAngle + charAngle),
+            y = y + (radius + charSize) * cos(startAngle + charAngle),
+            text=str(i),
+            style=charStyle,
             alignment=ft.alignment.center,
-            rotate=(2.0 * math.pi) - digitAngle
+            rotate=(2 * pi) - charAngle
         ))
-        digit -= 1
-        if digit <= 0:
-            digit = 12
-        digitAngle += delta
+        charAngle -= delta
 
-    return digitShapes
+    return charShapes
