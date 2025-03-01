@@ -1,46 +1,39 @@
 import flet as ft
 import flet.canvas as cv
-import math
 import calendar
 
 from datetime import datetime
+from math import sin, cos, pi
 
 from random_color import random_Color
 
-def monthDayRing(radius: float, settings: dict, randomColor: bool):
-    colors = settings["colors"]
+def monthDayRing(x: float, y: float, radius: float, colors: dict, randomColor: bool):
     today = datetime.now()
-    startAngle = math.pi
-    digitAngle = 0
     monthRange = calendar.monthrange(today.year, today.month)
-    delta = (2.0 * math.pi)/monthRange[1]
-    digit = monthRange[1]
+    startAngle = pi
+    delta = (2.0 * pi)/monthRange[1]
+    digitAngle = -delta
+
     digitShapes = []
     digitSize = radius / 10
 
     radius *= 1.1
 
-    while digitAngle <= startAngle + (2.0 * math.pi):
-        x = radius * (1 + math.sin(startAngle + digitAngle))
-        y = radius * (1 + math.cos(startAngle + digitAngle))
-
+    for i in range(1, monthRange[1] + 1):
         digitStyle = ft.TextStyle(
+            color = random_Color() if randomColor else colors["digits"],
             size = digitSize,
-            color = random_Color() if randomColor else colors["monthDays"],
             weight=ft.FontWeight.NORMAL
         )
 
         digitShapes.append(cv.Text(
-            x=(x - digitSize * math.sin(startAngle + digitAngle)),
-            y=(y - digitSize * math.cos(startAngle + digitAngle)),
-            text=str(digit),
+            x = x + (radius + digitSize) * sin(startAngle + digitAngle),
+            y = y + (radius + digitSize) * cos(startAngle + digitAngle),
+            text=str(i),
             style=digitStyle,
             alignment=ft.alignment.center,
-            rotate=(2.0 * math.pi) - digitAngle
+            rotate=(2 * pi) - digitAngle
         ))
-        digit -= 1
-        if digit <= 0:
-            digit = monthRange[1]
-        digitAngle += delta
+        digitAngle -= delta
 
     return digitShapes
