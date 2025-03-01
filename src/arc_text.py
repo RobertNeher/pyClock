@@ -20,8 +20,6 @@ def arcText(x: float, y: float, text: str, radius: float, colors: dict, randomCo
             weight=ft.FontWeight.NORMAL
         )
 
-        # x = radius * (1.0 + sin(startAngle + charAngle)) - radius
-        # y = radius * (1.0 + cos(startAngle + charAngle)) - radius
         x = radius * sin(startAngle + charAngle)
         y = radius * cos(startAngle + charAngle)
 
