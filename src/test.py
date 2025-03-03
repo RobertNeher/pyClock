@@ -1,20 +1,22 @@
 import flet as ft
-import flet.canvas as cv
 
-from datetime import datetime
-from math import pi
+import io
+import json
 
-from arc_text import arcText
-import sys
+from moon_phase import moonPhase, moonPhaseOnDay
+
 
 def main(page: ft.Page):
+    settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    # page.bgcolor = ft.Colors.WHITE54
+    page.bgcolor = ft.Colors.WHITE
+    page.window.bgcolor = ft.Colors.WHITE60
+    radius = settings["radius"]
+    randomColor = settings["randomColor"]
+
     page.add(
-        cv.Canvas(
-            shapes=arcText(text="Robert Neher", radius=100, colors={}, randomColor=True),
-        )
+        moonPhase(radius=radius, settings=settings, randomColor=randomColor)
     )
 
 # if __name__ == "__main__":

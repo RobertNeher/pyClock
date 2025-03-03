@@ -1,20 +1,21 @@
 {
     "version": "0.0.1",
     "settings": {
-        "radius": 250,
-        "randomColor": true,
+        "radius": 200,
+        "randomColor": false,
         "dateFormat": "%d|%b",
         "updatePeriod": 1,
         "clockFace": true,
         "secondHand": true,
         "smoothHands": true,
+        "maxStars": 100,
         "hands": {
             "hourHandFactor": 0.65,
             "minuteHandFactor": 0.9,
             "secondHandFactor": 0.85,
-            "hourHandWidth": 10,
-            "minuteHandWidth": 15,
-            "secondHandWidth": 3
+            "hourHandWidth": 5,
+            "minuteHandWidth": 7,
+            "secondHandWidth": 1.5
         },
         "colors": {
                 "clockFace": "#E6E6E6",
@@ -30,7 +31,11 @@
                 "hourHand": "#666666",
                 "monthDays": "#BFBFBF",
                 "dateField": "#A4A4A4",
-                "dateFieldFrame": "#666666"
+                "dateFieldFrame": "#666666",
+                "nightSky": "#000080",
+                "stars": "#FFFF80",
+                "moonPhaseCover": "#FFFFA0",
+                "moonPhaseCoverBorder": "#FFEF40"
             },
             "complications": {
                 "dateWindow": true,
