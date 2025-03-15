@@ -22,6 +22,7 @@ def main(page: ft.Page) -> None:
     radius = settings["radius"]
     colors = settings["colors"]
     complications = settings["complications"]
+    digitTurn = settings["digitTurn"]
 
     page.window.width = 2.3 * radius
     page.window.height = 2.3 * radius
@@ -33,7 +34,7 @@ def main(page: ft.Page) -> None:
     clockFaceCanvas = clockFace(radius=radius, colors=colors, clockFace=face, randomColor=randomColor)
 
     clockFaceCanvas.shapes.extend(tickRing(radius=radius, colors=colors, randomColor=randomColor))
-    clockFaceCanvas.shapes.extend(hourRing(radius=radius, colors=colors, randomColor=randomColor))
+    clockFaceCanvas.shapes.extend(hourRing(radius=radius, colors=colors, digitTurn=digitTurn, randomColor=randomColor))
 
     clock_Face = ft.Container(
             alignment=ft.alignment.top_left,
@@ -103,7 +104,7 @@ def main(page: ft.Page) -> None:
 
     if complications["dateWindow"]:
         clockApp.controls.append(date_Window)
-        
+
     if complications["weekDay"]:
         clockApp.controls.append(week_Day)
 
@@ -113,7 +114,7 @@ def main(page: ft.Page) -> None:
     if not face:
         page.window.bgcolor = ft.Colors.TRANSPARENT
         page.bgcolor = ft.Colors.TRANSPARENT
-    
+
     while True:
         second = datetime.now().second
         minute = datetime.now().minute

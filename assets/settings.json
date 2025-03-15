@@ -2,13 +2,14 @@
     "version": "0.0.1",
     "settings": {
         "radius": 200,
-        "randomColor": false,
+        "randomColor": true,
         "dateFormat": "%d|%b",
         "updatePeriod": 1,
         "clockFace": true,
         "secondHand": true,
         "smoothHands": true,
         "maxStars": 100,
+        "digitTurn": false,
         "hands": {
             "hourHandFactor": 0.65,
             "minuteHandFactor": 0.9,
