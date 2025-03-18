@@ -37,12 +37,16 @@ def main(page: ft.Page):
     moon_Phase = moonPhase(offset=ft.Offset(radius*0.15, radius*0.15), radius=radius, settings=settings, randomColor=randomColor)
 
     coverPaint = ft.Paint(
-        blend_mode=ft.BlendMode.SRC_A_TOP,
-        # blend_mode=ft.BlendMode.MODULATE,
         # blend_mode=ft.BlendMode.HARD_LIGHT,
-        color=ft.Colors.BLACK,
         style=ft.PaintingStyle.FILL,
-        # color=random_Color(tuple=False) if randomColor else ft.Colors.BLACK,
+        # color=ft.Colors.BLACK,
+        color=random_Color(tuple=False) if randomColor else ft.Colors.BLACK,
+    )
+    coverBorderPaint = ft.Paint(
+        stroke_cap=ft.StrokeCap.ROUND,
+        stroke_width=5,
+        style=ft.PaintingStyle.STROKE,
+        color=random_Color(tuple=False) if randomColor else ft.Colors.BLACK,
     )
 
     arc = 0
@@ -56,12 +60,6 @@ def main(page: ft.Page):
                     moon_Phase,
                     cv.Canvas(
                         shapes=[
-                            cv.Circle(
-                                x=radius*0.3,
-                                y=radius*0.5,
-                                radius=radius*0.26,
-                                paint=coverPaint
-                            )
                         ]
                     ),
                     cv.Canvas(
@@ -70,16 +68,48 @@ def main(page: ft.Page):
                                 x=radius*0.95,
                                 y=radius*0.5,
                                 radius=radius*0.26,
+                                paint=coverBorderPaint
+                            ),
+                            cv.Circle(
+                                x=radius*0.3,
+                                y=radius*0.5,
+                                radius=radius*0.26,
+                                paint=coverBorderPaint
+                            ),
+                            cv.Rect(
+                                x=radius*0.035,
+                                y=radius*0.5,
+                                width=radius*1.18,
+                                height=radius*0.75,
                                 paint=coverPaint
                             ),
                             cv.Rect(
                                 x=radius*0.035,
                                 y=radius*0.5,
-                                width=radius*1.2,
+                                width=radius*1.18,
                                 height=radius*0.75,
+                                paint=coverBorderPaint
+                            ),
+                            cv.Circle(
+                                x=radius*0.95,
+                                y=radius*0.5,
+                                radius=radius*0.26,
                                 paint=coverPaint
-                            )
+                            ),
+                            cv.Circle(
+                                x=radius*0.3,
+                                y=radius*0.5,
+                                radius=radius*0.26,
+                                paint=coverPaint
+                            ),
+                            # cv.Arc(
+                            #     x=0,#radius*0.95,
+                            #     y=0,#radius*0.5,
+                            #     width=radius*0.26,
+                            #     height=radius*0.26,
+                            #     paint=coverBorderPaint,
 
+                            # ),
                         ]
                     ),
             ])
