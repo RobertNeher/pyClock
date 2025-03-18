@@ -9,6 +9,7 @@ import flet.canvas as cv
 from math import pi
 
 from clock_hands import arrowHand, spindle, HandType
+from moon_phase import moonPhase
 from random_color import random_Color
 from hour_ring import hourRing
 from tick_ring import tickRing
@@ -107,6 +108,9 @@ def main(page: ft.Page) -> None:
 
     if complications["weekDay"]:
         clockApp.controls.append(week_Day)
+
+    if complications["moonPhase"]:
+        clockApp.controls.append(moonPhase(radius=radius, settings=settings, randomColor=randomColor))
 
     page.add(clockApp)
     page.expand = 1
