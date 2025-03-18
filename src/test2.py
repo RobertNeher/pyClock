@@ -21,6 +21,7 @@ def days_in_month(date):
 
 def main(page: ft.Page):
     settings = json.load(io.open("assets/settings.json", "r", encoding="UTF-8"))["settings"]
+    colors = settings["colors"]
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.bgcolor = ft.Colors.WHITE
@@ -40,13 +41,13 @@ def main(page: ft.Page):
         # blend_mode=ft.BlendMode.HARD_LIGHT,
         style=ft.PaintingStyle.FILL,
         # color=ft.Colors.BLACK,
-        color=random_Color(tuple=False) if randomColor else ft.Colors.BLACK,
+        color=random_Color(tuple=False) if randomColor else colors["moonPhaseCover"],
     )
     coverBorderPaint = ft.Paint(
         stroke_cap=ft.StrokeCap.ROUND,
         stroke_width=5,
         style=ft.PaintingStyle.STROKE,
-        color=random_Color(tuple=False) if randomColor else ft.Colors.BLACK,
+        color=random_Color(tuple=False) if randomColor else colors["moonPhaseCoverBorder"],
     )
 
     arc = 0
